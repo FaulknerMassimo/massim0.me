@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" data-root="1">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>astronomy - massim0.me</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="site-title">
+        <a href="../index.html">massim0.me</a>
+      </div>
+      <nav>
+        <a href="../index.html">home</a>
+        <a href="projects.html">projects</a>
+        <a href="racing.html">racing</a>
+        <a href="astronomy.html" class="active">astronomy</a>
+        <a href="memes.html">memes</a>
+        <a href="cats.html">cats</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="category-header">
+        <h1>.* astronomy</h1>
+        <p>Pictures I've taken of the night sky</p>
+      </section>
+
+      <ul class="post-list" id="category-posts"></ul>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 massimo faulkner - assembled from spare parts</p>
+    </div>
+  </footer>
+
+  <script src="../js/posts.js"></script>
+  <script src="../js/site.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const posts = POSTS.filter(p => p.category === "astronomy");
+      renderPostList(posts, document.getElementById("category-posts"), false);
+    });
+  </script>
+
+</body>
+</html>

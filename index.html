@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-root="0">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>massim0.me</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="site-title">
+        <a href="index.html">massim0.me</a>
+      </div>
+      <nav>
+        <a href="index.html" class="active">home</a>
+        <a href="categories/projects.html">projects</a>
+        <a href="categories/racing.html">racing</a>
+        <a href="categories/astronomy.html">astronomy</a>
+        <a href="categories/memes.html">memes</a>
+        <a href="categories/cats.html">cats</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="hero">
+        <h1>hi, i'm massimo.</h1>
+        <p class="tagline">electrical engineering student</p>
+        <div class="bio">
+          <p>
+            Born and raised in Montreal, QC, I've been building and taking
+            apart electronics since I was a kid. Now, as a 19 year old, I'm
+            studying electrical engineering at &Eacute;cole de technologie sup&eacute;rieure,
+            where I work on projects ranging from robotics to race cars.
+          </p>
+          <p>
+            This site is where I document projects, dump things I find
+            interesting, and generally just post whatever I feel like. I coded
+            it myself (with a little help from Claude) and all of the code is
+            open source on <a href="https://github.com/FaulknerMassimo/massim0.me" target="_blank" rel="noopener">github</a>.
+          </p>
+        </div>
+      </section>
+
+      <div class="section-heading">
+        <span>/ links</span>
+      </div>
+      <div class="category-grid">
+        <a class="category-card" href="https://github.com/FaulknerMassimo" target="_blank" rel="noopener">
+          <span class="cat-icon">[gh]</span>
+          <span>github</span>
+        </a>
+        <a class="category-card" href="https://www.linkedin.com/in/massimo-faulkner-3a79813b6/" target="_blank" rel="noopener">
+          <span class="cat-icon">[in]</span>
+          <span>linkedin</span>
+        </a>
+        <a class="category-card" href="https://www.youtube.com/@massimofaulkner735" target="_blank" rel="noopener">
+          <span class="cat-icon">[yt]</span>
+          <span>youtube</span>
+        </a>
+      </div>
+
+      <div class="section-heading">
+        <span>/ explore</span>
+      </div>
+      <div class="category-grid">
+        <a class="category-card" href="categories/projects.html">
+          <span class="cat-icon">&gt;_</span>
+          <span>projects</span>
+        </a>
+        <a class="category-card" href="categories/racing.html">
+          <span class="cat-icon">&gt;&gt;</span>
+          <span>racing</span>
+        </a>
+        <a class="category-card" href="categories/astronomy.html">
+          <span class="cat-icon">.*</span>
+          <span>astronomy</span>
+        </a>
+        <a class="category-card" href="categories/memes.html">
+          <span class="cat-icon">:)</span>
+          <span>memes</span>
+        </a>
+        <a class="category-card" href="categories/cats.html">
+          <span class="cat-icon">=^.^=</span>
+          <span>cats</span>
+        </a>
+      </div>
+
+      <div class="section-heading">
+        <span>/ featured posts</span>
+      </div>
+      <ul class="post-list" id="featured-posts"></ul>
+
+      <div class="section-heading">
+        <span>/ recent posts</span>
+      </div>
+      <ul class="post-list" id="recent-posts"></ul>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 massimo faulkner - assembled from spare parts</p>
+    </div>
+  </footer>
+
+  <script src="js/posts.js"></script>
+  <script src="js/site.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const featured = POSTS.filter(p => p.featured);
+      renderPostList(featured, document.getElementById("featured-posts"), true);
+      const recent = POSTS
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 6);
+      renderPostList(recent, document.getElementById("recent-posts"), true);
+    });
+  </script>
+
+</body>
+</html>
