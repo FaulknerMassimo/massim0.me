@@ -15,6 +15,14 @@ const POSTS = [
     excerpt: "Pictures I took of the lunar eclipse in March 2025",
     featured: true
   },
+  {
+    id: "orion-nebula-march-2025",
+    title: "Orion Nebula - March 2025",
+    category: "astronomy",
+    date: "2025-03-23",
+    excerpt: "Pictures I took of the Orion Nebula on March 23, 2025",
+    featured: true
+  },
 ];
 
 const CATEGORIES = {
