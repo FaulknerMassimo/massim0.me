@@ -1,3 +1,14 @@
+"""
+strip_metadata.py
+
+Usage: python scripts/strip_metadata.py <path> [--inplace]
+
+Examples:
+    python scripts/strip_metadata.py images/cats/eclipse.jpg
+    python scripts/strip_metadata.py images/cats/
+    python scripts/strip_metadata.py images/cats/ images/memes/ --inplace
+"""
+
 import sys
 import os
 from pathlib import Path
