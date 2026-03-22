@@ -23,6 +23,14 @@ const POSTS = [
     excerpt: "Pictures I took of the Orion Nebula on March 23, 2025",
     featured: true
   },
+  {
+    id: "custom-pc",
+    title: "Custom PC Build",
+    category: "projects",
+    date: "2022-05-26",
+    excerpt: "My custom PC build with an Intel i5-12600K and an RTX 3060",
+    featured: true
+  },
 ];
 
 const CATEGORIES = {
