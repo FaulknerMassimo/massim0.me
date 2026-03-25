@@ -5,18 +5,26 @@ Usage: python scripts/strip_metadata.py <path> [--inplace]
 
 Examples:
     python scripts/strip_metadata.py images/cats/eclipse.jpg
+    python scripts/strip_metadata.py images/racing/lap.mov
     python scripts/strip_metadata.py images/cats/
     python scripts/strip_metadata.py images/cats/ images/memes/ --inplace
 """
 
 import sys
-import os
+import shutil
+import subprocess
+import tempfile
 from pathlib import Path
 from PIL import Image, ImageOps
 
-SUPPORTED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".gif", ".tiff", ".tif", ".webp"}
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".gif", ".tiff", ".tif", ".webp"}
+VIDEO_EXTENSIONS = {".mov"}
+SUPPORTED_EXTENSIONS = IMAGE_EXTENSIONS | VIDEO_EXTENSIONS
 
 def strip_metadata(src_path: Path, inplace: bool = False) -> Path:
+    if src_path.suffix.lower() in VIDEO_EXTENSIONS:
+        return strip_video_metadata(src_path, inplace=inplace)
+
     with Image.open(src_path) as img:
         img = ImageOps.exif_transpose(img)
         clean = Image.new(img.mode, img.size)
@@ -30,6 +38,47 @@ def strip_metadata(src_path: Path, inplace: bool = False) -> Path:
     clean.save(dest_path)
     return dest_path
 
+def strip_video_metadata(src_path: Path, inplace: bool = False) -> Path:
+    if shutil.which("ffmpeg") is None:
+        raise RuntimeError("ffmpeg is required to strip metadata from .mov files.")
+
+    if inplace:
+        with tempfile.NamedTemporaryFile(
+            delete=False,
+            suffix=src_path.suffix,
+            dir=src_path.parent,
+        ) as tmp:
+            output_path = Path(tmp.name)
+        dest_path = src_path
+    else:
+        output_path = src_path.with_stem(src_path.stem + "_clean")
+        dest_path = output_path
+
+    command = [
+        "ffmpeg",
+        "-y",
+        "-i",
+        str(src_path),
+        "-map_metadata",
+        "-1",
+        "-c",
+        "copy",
+        str(output_path),
+    ]
+
+    try:
+        result = subprocess.run(command, capture_output=True, text=True, check=False)
+        if result.returncode != 0:
+            raise RuntimeError(result.stderr.strip() or "ffmpeg failed.")
+
+        if inplace:
+            output_path.replace(src_path)
+        return dest_path
+    except Exception:
+        if inplace and output_path.exists():
+            output_path.unlink(missing_ok=True)
+        raise
+
 def process(target: str, inplace: bool) -> None:
     target_path = Path(target)
 
@@ -41,7 +90,7 @@ def process(target: str, inplace: bool) -> None:
             if p.is_file() and p.suffix.lower() in SUPPORTED_EXTENSIONS
         ]
         if not paths:
-            print(f"No supported image files found in '{target_path}'.")
+            print(f"No supported media files found in '{target_path}'.")
             return
     else:
         print(f"Error: '{target}' is not a valid file or directory.")
